@@ -31,8 +31,6 @@ while running:
         if not paused:
             player.update(dt)
 
-        # draws
-
         game_win.fill((0,0,0))
 
         player.draw(game_win)

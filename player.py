@@ -22,17 +22,14 @@ class Player:
             IL : alen * [ get_quad(ss, (3 * f_w, 3 * f_h), f_w, f_h) ]
         }
 
-        self.idx = 0
-        self.fps = 5
-        self.timer = 0
-
+        self.aidx, self.fps, self.timer = 0, 5, 0
         self.state = IF
 
-    def on_keyup(self, k):
-        if k == pg.K_a:   self.state = IR
-        elif k == pg.K_s: self.state = IF
-        elif k == pg.K_d: self.state = IL
-        elif k == pg.K_w: self.state = IB
+        self.x, self.y = 200, 200
+    
+    def on_keyup(self, k, 
+        ku_xsitions = {pg.K_a:IR, pg.K_s:IF, pg.K_d:IL, pg.K_w:IB}):
+        if k in ku_xsitions: self.state = ku_xsitions[k]
 
     def update(self, dt):
 
@@ -42,10 +39,13 @@ class Player:
         elif keymap[pg.K_d]: self.state = ML
         elif keymap[pg.K_w]: self.state = MB
 
+        if self.state in (MR, MF, ML, MB):
+            # code for moving and collision checking
+
         self.timer += dt
         if self.timer >= 1/self.fps:
             self.timer -= 1/self.fps
-            self.idx = (self.idx + 1) % alen
+            self.aidx = (self.aidx + 1) % alen
 
     def draw(self, surf):
-        surf.blit(self.animations[self.state][self.idx], (100, 100))
+        surf.blit(self.animations[self.state][self.aidx], (self.x, self.y))
