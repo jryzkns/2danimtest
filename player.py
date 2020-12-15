@@ -1,5 +1,6 @@
 import pygame as pg
 from lib import *
+from game_context import *
 
 MF, MB, MR, ML = 1, 2, 3, 4
 IF, IB, IR, IL = 5, 6, 7, 8
@@ -36,10 +37,10 @@ class Player:
         if k in ku_xsitions: self.state = ku_xsitions[k]
 
     def recalc_hitbox(self):
-        return pg.Rect( self.x, 
-                        self.y + 2/3 * self.f_h, 
-                        self.f_w, 
-                        1/3 * self.f_h)
+        return pg.Rect( self.x + 1/6 *self.f_w, 
+                        self.y + 2/3 * self.f_h + 1/5 * self.f_h, 
+                        4/6 * self.f_w, 
+                        1/3 * self.f_h - 1/4 * self.f_h)
 
     def update(self, dt):
 
@@ -57,6 +58,14 @@ class Player:
         elif keymap[pg.K_w]: 
             self.state = MB
             dy = -1*self.movespeed
+
+        if (self.hitbox.y + dy*dt < 0 
+            or self.hitbox.y + self.hitbox.h + dy*dt > res[1]):
+            dy = 0
+
+        if (self.hitbox.x + dx*dt < 0 
+            or self.hitbox.x + self.hitbox.w + dx*dt > res[0]):
+            dx = 0
 
         self.x += dx * dt
         self.y += dy * dt

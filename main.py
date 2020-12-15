@@ -1,8 +1,7 @@
 # PYGAME BOILERPLATE CODE
 # JRYZKNS 2019
 
-res = (640, 360)
-
+from game_context import *
 import pygame as pg
 from player import Player
 
