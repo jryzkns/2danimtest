@@ -4,10 +4,12 @@
 from game_context import *
 import pygame as pg
 from player import Player
+from tilemap import Tilemap
 
 pg.init()
 game_win = pg.display.set_mode(res)
 
+bg = Tilemap()
 player = Player()
 
 running, paused, dt = True, False, 0
@@ -28,10 +30,12 @@ while running:
         dt = game_clock.get_time()/1000.
 
         if not paused:
+            bg.update(dt)
             player.update(dt)
 
         game_win.fill((0,0,0))
 
+        bg.draw(game_win)
         player.draw(game_win)
 
         pg.display.flip()
