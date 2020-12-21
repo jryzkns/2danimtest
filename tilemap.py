@@ -3,7 +3,7 @@ from game_context import *
 
 class Tilemap:
 
-    def __init__(self, mapfile = "grass.anim"):
+    def __init__(self, init_loc, mapfile = "grass.anim"):
 
         self.tile_length = 30
 
@@ -23,7 +23,7 @@ class Tilemap:
             (len(self.map[0])*self.tile_length,len(self.map)*self.tile_length))
         self.prerender()
 
-        self.view_x, self.view_y = 0, 0
+        self.view_x, self.view_y = init_loc[0]-res[0]//2, init_loc[1]-res[1]//2
 
     def prerender(self):
         for i in range(self.pre_render_map.get_width()//self.tile_length):
@@ -47,17 +47,8 @@ class Tilemap:
         self.view_x = self.clamp_x(self.view_x + dx)
         self.view_y = self.clamp_y(self.view_y + dy)
 
-    def update(self, player_loc, dt):
-        px, py = player_loc
-        keymap = pg.key.get_pressed()
-        if keymap[pg.K_LEFT]:
-            self.shift_perspective(-1,0)
-        if keymap[pg.K_DOWN]: 
-            self.shift_perspective(0,1)
-        if keymap[pg.K_RIGHT]: 
-            self.shift_perspective(1,0)
-        if keymap[pg.K_UP]: 
-            self.shift_perspective(0,-1)
+    def update(self, pdx, pdy, dt):
+        self.shift_perspective(pdx, pdy)
 
     def draw(self, surf):
         surf.blit(

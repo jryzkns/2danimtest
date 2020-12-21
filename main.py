@@ -9,8 +9,8 @@ from tilemap import Tilemap
 pg.init()
 game_win = pg.display.set_mode(res)
 
-bg = Tilemap()
 player = Player()
+bg = Tilemap(player.hitbox.center)
 
 running, paused, dt = True, False, 0
 game_clock = pg.time.Clock()
@@ -31,7 +31,7 @@ while running:
 
         if not paused:
             player.update(dt)
-            bg.update(player.hitbox.center, dt)
+            bg.update(player.dx, player.dy, dt)
 
         game_win.fill((0,0,0))
 

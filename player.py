@@ -24,6 +24,7 @@ class Player:
         }
 
         self.x, self.y = 150, 150
+        self.dx, self.dy = 0, 0
         self.movespeed = 300
 
         self.fps = self.movespeed/30
@@ -44,31 +45,33 @@ class Player:
 
     def update(self, dt):
 
-        dx, dy = 0, 0
         keymap = pg.key.get_pressed()
-        if keymap[pg.K_a] or keymap[pg.K_LEFT]:
+        if keymap[pg.K_a]:
             self.state = MR
-            dx = -1*self.movespeed
-        if keymap[pg.K_s] or keymap[pg.K_DOWN]: 
+            self.dx = -1*self.movespeed
+        if keymap[pg.K_s]:
             self.state = MF
-            dy = self.movespeed
-        if keymap[pg.K_d] or keymap[pg.K_RIGHT]: 
+            self.dy = self.movespeed
+        if keymap[pg.K_d]:
             self.state = ML
-            dx = self.movespeed
-        if keymap[pg.K_w] or keymap[pg.K_UP]: 
+            self.dx = self.movespeed
+        if keymap[pg.K_w]:
             self.state = MB
-            dy = -1*self.movespeed
+            self.dy = -1*self.movespeed
 
-        if (self.hitbox.y + dy*dt < 0 
-            or self.hitbox.y + self.hitbox.h + dy*dt > res[1]):
-            dy = 0
+        if (self.hitbox.y + self.dy*dt < 0 
+            or self.hitbox.y + self.hitbox.h + self.dy*dt > res[1]):
+            self.dy = 0
 
-        if (self.hitbox.x + dx*dt < 0 
-            or self.hitbox.x + self.hitbox.w + dx*dt > res[0]):
-            dx = 0
+        if (self.hitbox.x + self.dx*dt < 0 
+            or self.hitbox.x + self.hitbox.w + self.dx*dt > res[0]):
+            self.dx = 0
 
-        self.x += dx * dt
-        self.y += dy * dt
+        self.dx *= dt
+        self.dy *= dt
+
+        self.x += self.dx
+        self.y += self.dy
 
         self.hitbox = self.recalc_hitbox()
 
