@@ -49,13 +49,13 @@ class Player:
         if keymap[pg.K_a]:   
             self.state = MR
             dx = -1*self.movespeed
-        elif keymap[pg.K_s]: 
+        if keymap[pg.K_s]: 
             self.state = MF
             dy = self.movespeed
-        elif keymap[pg.K_d]: 
+        if keymap[pg.K_d]: 
             self.state = ML
             dx = self.movespeed
-        elif keymap[pg.K_w]: 
+        if keymap[pg.K_w]: 
             self.state = MB
             dy = -1*self.movespeed
 
