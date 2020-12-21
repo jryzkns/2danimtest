@@ -44,18 +44,18 @@ class Player:
 
     def update(self, dt):
 
-        dx, dy = 0, 0 
+        dx, dy = 0, 0
         keymap = pg.key.get_pressed()
-        if keymap[pg.K_a]:   
+        if keymap[pg.K_a] or keymap[pg.K_LEFT]:
             self.state = MR
             dx = -1*self.movespeed
-        if keymap[pg.K_s]: 
+        if keymap[pg.K_s] or keymap[pg.K_DOWN]: 
             self.state = MF
             dy = self.movespeed
-        if keymap[pg.K_d]: 
+        if keymap[pg.K_d] or keymap[pg.K_RIGHT]: 
             self.state = ML
             dx = self.movespeed
-        if keymap[pg.K_w]: 
+        if keymap[pg.K_w] or keymap[pg.K_UP]: 
             self.state = MB
             dy = -1*self.movespeed
 

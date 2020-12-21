@@ -30,8 +30,8 @@ while running:
         dt = game_clock.get_time()/1000.
 
         if not paused:
-            bg.update(dt)
             player.update(dt)
+            bg.update(player.hitbox.center, dt)
 
         game_win.fill((0,0,0))
 
