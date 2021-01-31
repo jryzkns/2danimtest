@@ -1,13 +1,14 @@
+from game_context import *
+
 import pygame as pg
 from lib import *
-from game_context import *
 
 MF, MB, MR, ML = 1, 2, 3, 4
 IF, IB, IR, IL = 5, 6, 7, 8
 ss_path, alen = "Charactervector.png", 4
 
 class Player:
-    def __init__(self, ww, wh):
+    def __init__(self, world):
         ss = pg.image.load(ss_path)
         ss_w, ss_h = ss.get_size()
         self.f_w, self.f_h = ss_w//alen, ss_h//alen
@@ -32,7 +33,7 @@ class Player:
 
         self.hitbox = self.recalc_hitbox()
 
-        self.world_w, self.world_h = ww, wh
+        self.world = world
 
     def on_keyup(self, k, 
         ku_xsitions = {pg.K_a:IR, pg.K_s:IF, pg.K_d:IL, pg.K_w:IB}):
@@ -62,11 +63,11 @@ class Player:
             dy = -1*self.movespeed
 
         if (self.hitbox.y + dy*dt < 0 
-            or self.hitbox.y + self.hitbox.h + dy*dt > self.world_h):
+            or self.hitbox.y + self.hitbox.h + dy*dt > self.world.h):
             dy = 0
 
         if (self.hitbox.x + dx*dt < 0 
-            or self.hitbox.x + self.hitbox.w + dx*dt > self.world_w):
+            or self.hitbox.x + self.hitbox.w + dx*dt > self.world.w):
             dx = 0
 
         self.x += dx * dt
@@ -82,12 +83,10 @@ class Player:
         pvx, pvy = self.hitbox.center
         pvx -= vx
         pvy -= vy
-        # do not shift the camera if not outside of camera bounds
         if camera_bounds.collidepoint((pvx, pvy)):
             dx, dy = 0, 0 
 
         return dx * dt, dy * dt
 
     def draw(self, surf, vx, vy):
-        surf.blit(  self.animations[self.state][self.aidx], 
-                    (self.x - vx, self.y - vy))
+        surf.blit( self.animations[self.state][self.aidx], (self.x - vx, self.y - vy))
