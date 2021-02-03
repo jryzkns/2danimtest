@@ -1,27 +1,24 @@
 res = (660, 360)
 
-W, H = res[0], res[1]
+WIDTH, HEIGHT = res[0], res[1]
 
-DOCK_N  = 0
-DOCK_NE = 1
-DOCK_E  = 2
-DOCK_SE = 3
-DOCK_S  = 4
-DOCK_SW = 5
-DOCK_W  = 6
-DOCK_NW = 7
-DOCK_NA = 8
+NA, W, S, E, N = 0, 1, 2, 4, 8
+
+NE = N + E
+NW = N + W
+SE = S + E
+SW = S + W
 
 from pygame import Rect
 
-cb = (
-    Rect(W//6,    0, 4*W//6, 5*H//6), # DOCK_N
-    Rect(W//6,    0, 5*W//6, 5*H//6), # DOCK_NE
-    Rect(W//6, H//6, 5*W//6, 4*H//6), # DOCK_E
-    Rect(W//6, H//6, 5*W//6, 5*H//6), # DOCK_SE
-    Rect(W//6, H//6, 4*W//6, 5*H//6), # DOCK_S
-    Rect(   0, H//6, 5*W//6, 5*H//6), # DOCK_SW
-    Rect(   0, H//6, 5*W//6, 4*H//6), # DOCK_W
-    Rect(   0,    0, 5*W//6, 5*H//6), # DOCK_NW
-    Rect(W//6, H//6, 4*W//6, 4*H//6)  # DOCK_NA
-)
+cb = {
+    NA : Rect(WIDTH//6, HEIGHT//6, 4*WIDTH//6, 4*HEIGHT//6),
+    W  : Rect(       0, HEIGHT//6, 5*WIDTH//6, 4*HEIGHT//6),
+    S  : Rect(WIDTH//6, HEIGHT//6, 4*WIDTH//6, 5*HEIGHT//6),
+    E  : Rect(WIDTH//6, HEIGHT//6, 5*WIDTH//6, 4*HEIGHT//6),
+    N  : Rect(WIDTH//6,         0, 4*WIDTH//6, 5*HEIGHT//6),
+    NE : Rect(WIDTH//6,         0, 5*WIDTH//6, 5*HEIGHT//6),
+    SE : Rect(WIDTH//6, HEIGHT//6, 5*WIDTH//6, 5*HEIGHT//6),
+    SW : Rect(       0, HEIGHT//6, 5*WIDTH//6, 5*HEIGHT//6),
+    NW : Rect(       0,         0, 5*WIDTH//6, 5*HEIGHT//6),
+}

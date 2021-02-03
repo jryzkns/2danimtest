@@ -18,6 +18,8 @@ running, paused, dt = True, False, 0
 game_clock = pg.time.Clock()
 game_clock.tick()
 
+print(bg.dock_state, cb[bg.dock_state])
+
 while running:
 
     for event in pg.event.get():
